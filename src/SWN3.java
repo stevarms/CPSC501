@@ -6,7 +6,7 @@ import java.util.Set;
 import java.util.Vector;
 
 public class SWN3 {
-	private String pathToSWN = "SentiWordNet_3.0.0.txt";
+	private String pathToSWN = "SentiWordNet.txt";
 	private HashMap<String, String> _dict;
 
 	public SWN3() {
@@ -18,15 +18,12 @@ public class SWN3 {
 			String line = "";
 			while ((line = csv.readLine()) != null) {
 				String[] data = line.split("\t");
-				//System.out.println(data[0] + ", " + data[1] + ", " + data[2]
-				//		+ ", " + data[3] + ", " + data[4] + ", " + data[5]);
 				Double score = Double.parseDouble(data[2])
 						- Double.parseDouble(data[3]);
 				String[] words = data[4].split(" ");
 				for (String w : words) {
 					String[] w_n = w.split("#");
 					w_n[0] += "#" + data[0];
-					System.out.println(w_n[0]);
 					int index = Integer.parseInt(w_n[1]) - 1;
 					if (_temp.containsKey(w_n[0])) {
 						Vector<Double> v = _temp.get(w_n[0]);
@@ -63,6 +60,8 @@ public class SWN3 {
 					sent = "positive";
 				else if (score > 0 && score >= 0.25)
 					sent = "weak_positive";
+				else if (score == 0)
+					sent = "Neutral";
 				else if (score < 0 && score >= -0.25)
 					sent = "weak_negative";
 				else if (score < -0.25 && score >= -0.5)
@@ -74,6 +73,7 @@ public class SWN3 {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		System.out.println("Initialization Complete");
 	}
 
 	public void printAll(){
