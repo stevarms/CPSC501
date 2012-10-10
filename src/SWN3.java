@@ -54,20 +54,24 @@ public class SWN3 {
 					sum += (double) 1 / (double) i;
 				score /= sum;
 				String sent = "";
-				if (score >= 0.75)
+				if (score <= 1.0 && score >= 0.75)
+					sent = "very_strong_positive";
+				else if (score < 0.75 && score >= 0.5)
 					sent = "strong_positive";
-				else if (score > 0.25 && score <= 0.5)
+				else if (score < 0.5 && score >= 0.25)
 					sent = "positive";
-				else if (score > 0 && score >= 0.25)
+				else if (score < 0.25 && score > 0)
 					sent = "weak_positive";
 				else if (score == 0)
-					sent = "Neutral";
+					sent = "neutral";
 				else if (score < 0 && score >= -0.25)
 					sent = "weak_negative";
 				else if (score < -0.25 && score >= -0.5)
 					sent = "negative";
-				else if (score <= -0.75)
+				else if (score < -0.5 && score >= -0.75)
 					sent = "strong_negative";
+				else if (score < -0.5 && score >= -1)
+					sent = "very_strong_negative";
 				_dict.put(word, sent);
 			}
 		} catch (Exception e) {
