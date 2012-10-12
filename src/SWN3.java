@@ -28,8 +28,8 @@ public class SWN3 {
 				for (int i = 1; i <= v.size(); i++)
 					sum += (double) 1 / (double) i;
 				score /= sum;
-				String result = getSentiment(score);
-				_dict.put(word, result);
+				String sentiment = getSentiment(score);
+				_dict.put(word, sentiment);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -103,5 +103,11 @@ public class SWN3 {
 	}
 	public String extract(String word, String type) {
 		return _dict.get(word + "#" + type);
+	}
+	
+	public static void main(String[] args) {
+		SWN3 myswn = new SWN3();
+		String test = myswn.extract("saintly","a");
+		System.out.println("saintly = " + test);
 	}
 }
